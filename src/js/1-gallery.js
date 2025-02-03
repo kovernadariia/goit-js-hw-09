@@ -1,3 +1,6 @@
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 const images = [
   {
     preview:
@@ -75,7 +78,7 @@ gallery.style.padding = '24px';
 
 const fragment = document.createDocumentFragment();
 
-images.forEach((image) => {
+images.forEach(image => {
   const li = document.createElement('li');
   li.classList.add('gallery-item');
   li.style.width = 'calc((100% - 48px) / 3)';
@@ -100,28 +103,28 @@ images.forEach((image) => {
 
 gallery.appendChild(fragment);
 
-gallery.addEventListener('mouseover', (event) => {
+gallery.addEventListener('mouseover', event => {
   if (event.target && event.target.nodeName === 'IMG') {
     event.target.style.transform = 'scale(1.1)';
   }
 });
 
-gallery.addEventListener('mouseout', (event) => {
+gallery.addEventListener('mouseout', event => {
   if (event.target && event.target.nodeName === 'IMG') {
     event.target.style.transform = 'scale(1)';
   }
 });
 
-gallery.addEventListener('click', (event) => {
+gallery.addEventListener('click', event => {
   if (event.target.nodeName === 'IMG') {
-    event.preventDefault();
     console.log(event.target.parentElement.href);
-    basicLightbox
-      .create(
-        `
-			<img src="${event.target.parentElement.href}" width="1112" height="640">
-			`
-      )
-      .show();
   }
 });
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+lightbox.on('shown.simplelightbox', function () {
+  document.querySelector('.sl-wrapper').style.background = '#2E2F42';
+});
+lightbox;
